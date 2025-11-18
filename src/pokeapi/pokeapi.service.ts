@@ -9,21 +9,16 @@ export class PokeapiService {
     const idOrName = String(id).toLowerCase();
     const url = `${this.apiUrl}/${idOrName}`;
 
-    try {
       const response = await fetch(url)
 
       if (!response.ok) {
         if (response.status === 404) {
           throw new NotFoundException();
         }
-
         throw new InternalServerErrorException();
       }
 
       return await response.json();
-    } catch (error) {
-      throw new InternalServerErrorException();
-    }
   }
 
 }
