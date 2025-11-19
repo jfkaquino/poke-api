@@ -125,8 +125,10 @@ export class TeamService {
   async removePokemon(trainerId: number, teamId: number, pokemonIdOrName: string): Promise<void> {
     const team = await this.findOne(trainerId, teamId);
 
+    const detailedPokemon = await this.pokeapiService.getPokemonDetails(pokemonIdOrName.toLowerCase());
+
     const teamPokemon = await this.teamPokemonRepository.findOne({
-      where: { team, pokemonIdOrName: pokemonIdOrName.toLowerCase() }
+      where: { team, pokemonIdOrName: detailedPokemon.name }
     });
 
     if (!teamPokemon) throw new NotFoundException('Pokémon not found.');

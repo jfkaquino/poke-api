@@ -1,7 +1,5 @@
 # poke-api
 
----
-
 API RESTful baseada na PokéAPI.  
 Gerencie treinadores e suas respectivas equipes em uma base de dados, consultando a API externa para detalhes de cada Pokémon.
 
@@ -38,5 +36,5 @@ mais enxuto em um projeto pequeno.
 
 1. Clone o repositório
 2. Inicie o contêiner do Docker: `docker compose up --build`
-3. API estará disponível em `http://localhost:3000`.  
+3. API estará disponível em [http://localhost:3000]().  
 Acesse a documentação do Swagger em `/api`.

@@ -3,7 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class CreatePokemonDto {
 
-  @ApiProperty({ examples: ['pikachu', '25'] })
+  @ApiProperty({ examples: ['pikachu', "25"], description: 'Pokémon name or ID' })
   @IsNotEmpty()
   @IsString()
   public pokemonIdOrName: string;
