@@ -6,11 +6,16 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
+  app.useGlobalPipes(new ValidationPipe({
+    whitelist: true,
+    forbidNonWhitelisted: true,
+    transform: true
+  }));
 
   const config = new DocumentBuilder()
-    .setTitle('Pokeapi')
-    .setDescription('API REST')
+    .setTitle('poke-api')
+    .setDescription('RESTful API based on PokéAPI.' +
+      '\nManage trainers and teams saved in a database, retrieving added Pokémons details in an external API.')
     .setVersion('1.0')
     .build();
 
@@ -19,4 +24,5 @@ async function bootstrap() {
 
   await app.listen(process.env.PORT ?? 3000);
 }
+
 bootstrap();

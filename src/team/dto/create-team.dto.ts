@@ -1,14 +1,10 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateTeamDto {
 
-  @ApiProperty()
+  @ApiProperty({ example: 'Kanto' })
   @IsNotEmpty()
   @IsString()
   public name: string;
-
-  @ApiProperty()
-  @IsNumber()
-  public trainerId: number;
 }

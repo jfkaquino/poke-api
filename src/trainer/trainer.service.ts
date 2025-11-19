@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateTrainerDto } from './dto/create-trainer.dto';
 import { UpdateTrainerDto } from './dto/update-trainer.dto';
+import { TrainerResponseDto } from './dto/trainer-response.dto';
 
 @Injectable()
 export class TrainerService {
@@ -12,29 +13,42 @@ export class TrainerService {
     private trainerRepository: Repository<Trainer>,
   ){}
 
-  async create(createTrainerDto: CreateTrainerDto): Promise<Trainer> {
+  async create(createTrainerDto: CreateTrainerDto): Promise<TrainerResponseDto> {
     const newTrainer = this.trainerRepository.create(createTrainerDto);
-    return this.trainerRepository.save(newTrainer);
+    await this.trainerRepository.save(newTrainer);
+    return {
+      id: newTrainer.id,
+      name: newTrainer.name,
+      cityOfOrigin: newTrainer.cityOfOrigin,
+    };
   }
 
-  async findAll(): Promise<Trainer[]> {
-    return this.trainerRepository.find();
+  async findAll(): Promise<TrainerResponseDto[]> {
+    const trainers = await this.trainerRepository.find();
+
+    return trainers.map(trainer => ({
+      id: trainer.id,
+      name: trainer.name,
+      cityOfOrigin: trainer.cityOfOrigin,
+    }));
   }
 
-  async findOne(id: number): Promise<Trainer> {
+  async findOne(id: number): Promise<TrainerResponseDto> {
     const trainer = await this.trainerRepository.findOne({
       where: { id }, relations: ['teams']
     });
 
-    if (!trainer) {
-      throw new NotFoundException();
-    }
+    if (!trainer) throw new NotFoundException('Trainer not found.');
 
-    return trainer;
+    return {
+      id: trainer.id,
+      name: trainer.name,
+      cityOfOrigin: trainer.cityOfOrigin,
+    }
   }
 
-  async update(id: number, updateTrainerDto: UpdateTrainerDto): Promise<Trainer> {
-    await this.findOne(id);
+  async update(id: number, updateTrainerDto: UpdateTrainerDto): Promise<TrainerResponseDto> {
+    await this.findOne(id); // Check if the trainer exists
     await this.trainerRepository.update(id, updateTrainerDto);
     return this.findOne(id);
   }
@@ -42,9 +56,7 @@ export class TrainerService {
   async remove(id: number): Promise<void> {
     const result = await this.trainerRepository.delete(id);
 
-    if (result.affected === 0) {
-      throw new NotFoundException();
-    }
+    if (result.affected === 0) throw new NotFoundException('Trainer not found.');
   }
 
 }

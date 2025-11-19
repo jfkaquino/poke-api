@@ -3,13 +3,13 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateTrainerDto {
 
-  @ApiProperty()
+  @ApiProperty({ example: 'Ash Ketchum' })
   @IsString()
   @IsNotEmpty()
   public name: string;
 
-  @ApiProperty()
+  @ApiProperty({ example: 'Pallet Town', required: false })
   @IsOptional()
   @IsString()
-  public cityOfOrigin: string;
+  public cityOfOrigin?: string;
 }

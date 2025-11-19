@@ -4,7 +4,7 @@ import { TeamService } from './team.service';
 import { PokeapiModule } from '../pokeapi/pokeapi.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Team } from './entities/team.entity';
-import { TeamPokemon } from '../team-pokemon/entities/teamPokemon.entity';
+import { TeamPokemon } from '../teamPokemon/entities/teamPokemon.entity';
 
 @Module({
   imports: [

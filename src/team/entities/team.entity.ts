@@ -6,7 +6,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { Trainer } from 'src/trainer/entities/trainer.entity';
-import { TeamPokemon } from 'src/team-pokemon/entities/teamPokemon.entity';
+import { TeamPokemon } from 'src/teamPokemon/entities/teamPokemon.entity';
 
 @Entity()
 export class Team {
